@@ -1,0 +1,43 @@
+script.db
+-- Create a new table to store the cleaned data
+CREATE TABLE cleaned_regular_season_totals (
+    player_id INT,
+    team_id INT,
+    team VARCHAR(50),
+    games_played INT,
+    points INT,
+    assists INT,
+    rebounds INT,
+    PRIMARY KEY (player_id, season_year)
+);
+
+-- Load data from the CSV file into a staging table
+CREATE TABLE staging_regular_season_totals (
+    player_id INT,
+    season_year INT,
+    team VARCHAR(50),
+    games_played INT,
+    points INT,
+    assists INT,
+    rebounds INT
+);
+
+COPY staging_regular_seÍÍlson_totals
+FROM './regular_season_totals_2010_2024.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- Insert cleaned data into the final table
+INSERT INTO cleaned_regular_season_totals (player_id, season_year, team, games_played, points, assists, rebounds)
+SELECT DISTINCT player_id, season_year, team, games_played, points, assists, rebounds
+FROM staging_regular_season_totals
+WHERE player_id IS NOT NULL
+  AND season_year IS NOT NULL
+  AND team IS NOT NULL
+  AND games_played IS NOT NULL
+  AND points IS NOT NULL
+  AND assists IS NOT NULL
+  AND rebounds IS NOT NULL;
+
+-- Drop the staging table
+DROP TABLE staging_regular_season_totals;
