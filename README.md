@@ -1,3 +1,4 @@
+Something is wrong with 2012-13 season. Also this is historical data, which I filtered to 2002 on.
 # NBA-Data-2010-2024 🏀
 This repository contains CSV files containing comprehensive NBA data spanning from the year 2010 to 2024, offering valuable insights into player statistics, team performances, game outcomes, and more.
 
